@@ -15,20 +15,32 @@ public class StorePage extends BasePage {
         super (driver );
     }
 
-    public void enterSearchText(String text){
+    private StorePage enterSearchText(String text){
         driver.findElement ( SEARCHFIELD ).sendKeys ( text );
+        return this;
     }
 
-    public void clickSearchButton(){
+    public StorePage searchProduct(String text){
+        enterSearchText ( text ).clickSearchButton ();
+        return this;
+    }
+
+    private StorePage clickSearchButton(){
         driver.findElement ( SERACH_BUTTON ).click ();
+        return this;
     }
 
     public String getTitle(){
         return driver.findElement ( SEARCH_TITLE ).getText ();
     }
 
-    public void clickAddToCart(){
-        driver.findElement ( ADDTOCART_BUTTON ).click ();
+    private By getAddToCardButtonElement(String productName){
+        return By.cssSelector ( "a[aria-label='Add “"+productName+"” to your cart']" );
+    }
+
+    public void clickAddToCart(String productName){
+        By addtoCartBTN = getAddToCardButtonElement (productName);
+        driver.findElement ( addtoCartBTN ).click ();
     }
 
 }
