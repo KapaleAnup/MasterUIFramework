@@ -1,6 +1,7 @@
 package com.uiframework.pages;
 
 import com.uiframework.base.BasePage;
+import com.uiframework.objects.BillingAddress;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -22,13 +23,22 @@ public class CheckOutPage extends BasePage {
         super ( driver );
     }
 
-    public void checkoutBillingDetails(String firstName,String lastName, String address,String city,String postalcode,String email){
-        enterFirstName ( firstName );
-        enterLastName ( lastName );
-        enterAddress ( address );
-        enterCity ( city );
-        enterPostalCode ( postalcode );
-        enterEmail ( email );
+//    public void checkoutBillingDetails(String firstName,String lastName, String address,String city,String postalcode,String email){
+//        enterFirstName ( firstName );
+//        enterLastName ( lastName );
+//        enterAddress ( address );
+//        enterCity ( city );
+//        enterPostalCode ( postalcode );
+//        enterEmail ( email );
+//    }
+
+    public CheckOutPage setBillingAddress( BillingAddress billingAddress ){
+      return  enterFirstName (billingAddress.getFirstName ()  )
+                .enterLastName ( billingAddress.getLastName ( ) )
+                .enterAddress ( billingAddress.getAddress ( ) )
+                .enterCity ( billingAddress.getCity ( ) )
+                .enterPostalCode ( billingAddress.getPostalCode ( ) )
+                .enterEmail ( billingAddress.getEmail ( ) );
     }
 
     public CheckOutPage enterFirstName(String firstName){
