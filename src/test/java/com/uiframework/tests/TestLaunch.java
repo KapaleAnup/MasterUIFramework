@@ -1,6 +1,7 @@
 package com.uiframework.tests;
 
 import com.uiframework.base.BaseTest;
+import com.uiframework.objects.BillingAddress;
 import com.uiframework.pages.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,6 +13,19 @@ public class TestLaunch extends BaseTest {
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException {
 
+/*
+        BillingAddress billingAddress = new BillingAddress ()
+                .setFirstName ( "demo" )
+                .setLastName ( "user" )
+                .setAddress ( "San Fransisco" )
+                .setCity ( "San Fransisco" )
+                .setPostalCode ( "94188" )
+                .setEmail ( "asktest@gmail.com" );
+*/
+
+        BillingAddress billingAddress = new BillingAddress ("demo", "user","San Fransisco","San Fransisco",
+                "94188","asktest@gmail.com");
+
         StorePage storePage = new HomePage ( driver )
                 .launchURL ()
                 .navigateToStoreMenuLink ()
@@ -21,17 +35,11 @@ public class TestLaunch extends BaseTest {
         storePage.clickAddToCart ("Blue Shoes");
         Thread.sleep ( 5000 );
         CartPage cartPage = storePage.clickViewCart ();
-
         Assert.assertEquals (cartPage.getPrductName (),"Blue Shoes");
-        CheckOutPage checkOutPage = cartPage.checkout ();
 
-        checkOutPage
-                .enterFirstName ( "demo" )
-                .enterLastName ( "user" )
-                .enterAddress ( "San francisco" )
-                .enterCity ( "San Francisco" )
-                .enterPostalCode ( "94188" )
-                .enterEmail ( "asktest@gmail.com" )
+        CheckOutPage checkOutPage = cartPage.
+                checkout ()
+                .setBillingAddress ( billingAddress )
                 .placeOder ();
 
         Thread.sleep ( 5000 );
@@ -41,6 +49,16 @@ public class TestLaunch extends BaseTest {
 
     @Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException {
+       /* BillingAddress billingAddress = new BillingAddress ()
+                .setFirstName ( "demo" )
+                .setLastName ( "user" )
+                .setAddress ( "San Fransisco" )
+                .setCity ( "San Fransisco" )
+                .setPostalCode ( "94188" )
+                .setEmail ( "asktest@gmail.com" );*/
+
+        BillingAddress billingAddress = new BillingAddress ("demo", "user","San Fransisco","San Fransisco",
+                "94188","asktest@gmail.com");
 
         StorePage storePage = new HomePage ( driver )
                 .launchURL ()
@@ -65,15 +83,8 @@ public class TestLaunch extends BaseTest {
 
         checkoutLoginPage.CheckoutLoginDetails ( "Test","Test@123" );
 
-
-        checkOutPage
-                .enterFirstName ( "demo" )
-                .enterLastName ( "user" )
-                .enterAddress ( "San francisco" )
-                .enterCity ( "San Francisco" )
-                .enterPostalCode ( "94188" )
-                .enterEmail ( "asktest@gmail.com" )
-                .placeOder ();
+        checkOutPage.
+                setBillingAddress ( billingAddress).placeOder ();
 
         Thread.sleep ( 5000 );
         Assert.assertEquals ( checkOutPage.getMessage (),"Thank you. Your order has been received." );
