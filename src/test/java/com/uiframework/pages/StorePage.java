@@ -9,7 +9,8 @@ public class StorePage extends BasePage {
     private final By SEARCHFIELD= By.cssSelector ( "#woocommerce-product-search-field-0");
     private final By SERACH_BUTTON = By.cssSelector ( "button[value='Search']" );
     private final By SEARCH_TITLE = By.cssSelector ( ".woocommerce-products-header__title.page-title" );
-    private final By ADDTOCART_BUTTON = By.cssSelector ( "a[aria-label='Add “Blue Shoes” to your cart']" );
+    private final By VIEWCART_LINK = By.cssSelector ( "a[title='View cart']" );
+
 
     public StorePage ( WebDriver driver ) {
         super (driver );
@@ -38,9 +39,15 @@ public class StorePage extends BasePage {
         return By.cssSelector ( "a[aria-label='Add “"+productName+"” to your cart']" );
     }
 
-    public void clickAddToCart(String productName){
+    public StorePage clickAddToCart(String productName){
         By addtoCartBTN = getAddToCardButtonElement (productName);
         driver.findElement ( addtoCartBTN ).click ();
+        return this;
+    }
+
+    public CartPage clickViewCart(){
+        driver.findElement ( VIEWCART_LINK ).click ();
+        return new CartPage(driver);
     }
 
 }
