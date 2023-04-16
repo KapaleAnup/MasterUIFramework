@@ -12,10 +12,10 @@ public class TestLaunch extends BaseTest {
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException {
 
-        driver.get ( "https://askomdch.com/" );
-        HomePage homePage = new HomePage ( driver );
-        StorePage storePage = homePage.navigateToStoreMenuLink();
-        storePage.searchProduct ( "Blue" );
+        StorePage storePage = new HomePage ( driver )
+                .launchURL ()
+                .navigateToStoreMenuLink ()
+                .searchProduct ( "Blue" );
         Assert.assertEquals ( storePage.getTitle (),"Search results: “Blue”");
 
         storePage.clickAddToCart ("Blue Shoes");
@@ -42,10 +42,10 @@ public class TestLaunch extends BaseTest {
     @Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException {
 
-        driver.get ( "https://askomdch.com/" );
-        HomePage homePage = new HomePage ( driver );
-        StorePage storePage = homePage.navigateToStoreMenuLink();
-        storePage.searchProduct ( "Blue" );
+        StorePage storePage = new HomePage ( driver )
+                .launchURL ()
+                .navigateToStoreMenuLink ()
+                .searchProduct ( "Blue" );
         Assert.assertEquals ( storePage.getTitle (),"Search results: “Blue”");
 
         storePage.clickAddToCart ("Blue Shoes");
