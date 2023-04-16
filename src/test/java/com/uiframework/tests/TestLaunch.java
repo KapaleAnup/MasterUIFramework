@@ -16,11 +16,9 @@ public class TestLaunch extends BaseTest {
         driver.get ( "https://askomdch.com/" );
         HomePage homePage = new HomePage ( driver );
         StorePage storePage = homePage.clickStoreMenulink ();
-        storePage.enterSearchText ( "Blue" );
-        storePage.clickSearchButton ();
+        storePage.searchProduct ( "Blue" );
         Assert.assertEquals ( storePage.getTitle (),"Search results: “Blue”");
-        ;
-        storePage.clickAddToCart ();
+        storePage.clickAddToCart ("Blue Shoes");
 
 
     }
