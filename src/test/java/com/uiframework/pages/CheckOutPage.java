@@ -15,6 +15,8 @@ public class CheckOutPage extends BasePage {
     private final By PLACEORDER = By.id ( "place_order" );
     private final By SUCCESSMESSAGE = By.cssSelector ( ".woocommerce-notice" );
 
+    private final By CHECKOUT_LOGIN= By.cssSelector ( ".showlogin" );
+
 
     public CheckOutPage ( WebDriver driver ) {
         super ( driver );
@@ -65,5 +67,10 @@ public class CheckOutPage extends BasePage {
 
     public String getMessage(){
         return driver.findElement ( SUCCESSMESSAGE ).getText ();
+    }
+
+    public CheckoutLoginPage clickOnLoginLink(){
+        driver.findElement ( CHECKOUT_LOGIN ).click ();
+        return new CheckoutLoginPage(driver);
     }
 }
