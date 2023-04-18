@@ -16,7 +16,7 @@ public class TestLaunch extends BaseTest {
 
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
+    public void guestCheckoutUsingDirectBankTransfer() throws IOException {
 
 /*
         BillingAddress billingAddress = new BillingAddress ()
@@ -43,7 +43,6 @@ public class TestLaunch extends BaseTest {
         Assert.assertEquals ( storePage.getTitle (),"Search results: “dark”");
 
         storePage.clickAddToCart (product.getName ());
-        Thread.sleep ( 5000 );
         CartPage cartPage = storePage.clickViewCart ();
         Assert.assertEquals (cartPage.getPrductName (),product.getName ());
 
@@ -52,7 +51,6 @@ public class TestLaunch extends BaseTest {
                 .setBillingAddress ( billingAddress )
                 .placeOder ();
 
-        Thread.sleep ( 5000 );
         Assert.assertEquals ( checkOutPage.getMessage (),"Thank you. Your order has been received." );
 
     }

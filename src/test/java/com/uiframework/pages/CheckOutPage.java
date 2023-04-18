@@ -4,6 +4,13 @@ import com.uiframework.base.BasePage;
 import com.uiframework.objects.BillingAddress;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Listeners;
+
+import java.time.Duration;
+import java.util.List;
 
 public class CheckOutPage extends BasePage {
 
@@ -17,6 +24,8 @@ public class CheckOutPage extends BasePage {
     private final By SUCCESSMESSAGE = By.cssSelector ( ".woocommerce-notice" );
 
     private final By CHECKOUT_LOGIN= By.cssSelector ( ".showlogin" );
+
+    private final By OVELAY = By.cssSelector ( ".blockUI blockOverlay" );
 
 
     public CheckOutPage ( WebDriver driver ) {
@@ -80,6 +89,11 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckoutLoginPage clickOnLoginLink(){
+       List <WebElement> overlays = driver.findElements ( OVELAY );
+       if(overlays.size () > 0 ){
+           new WebDriverWait ( driver, Duration.ofSeconds ( 15 )).
+                   until ( ExpectedConditions.invisibilityOfAllElements ( overlays ));
+       }
         driver.findElement ( CHECKOUT_LOGIN ).click ();
         return new CheckoutLoginPage(driver);
     }
