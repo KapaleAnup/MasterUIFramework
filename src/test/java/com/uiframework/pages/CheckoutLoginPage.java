@@ -3,6 +3,7 @@ package com.uiframework.pages;
 import com.uiframework.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CheckoutLoginPage extends BasePage {
 
@@ -15,16 +16,16 @@ public class CheckoutLoginPage extends BasePage {
     }
 
     public CheckoutLoginPage enterUserName(String username){
-        driver.findElement ( USERNAME ).sendKeys ( username );
+        wait.until ( ExpectedConditions.visibilityOfElementLocated ( USERNAME ) ).sendKeys ( username );
         return this;
     }
     public CheckoutLoginPage enterPassword(String password){
-        driver.findElement ( USERNAME ).sendKeys ( password );
+        wait.until ( ExpectedConditions.visibilityOfElementLocated ( USERNAME ) ).sendKeys ( password );
         return this;
     }
 
     public CheckOutPage clickOnLoginButton(){
-        driver.findElement ( LOGIN_BUTTON );
+       wait.until ( ExpectedConditions.elementToBeClickable ( LOGIN_BUTTON ) ).click ();
        return new CheckOutPage ( driver );
     }
 

@@ -3,6 +3,8 @@ package com.uiframework.pages;
 import com.uiframework.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 public class StorePage extends BasePage {
 
@@ -32,7 +34,7 @@ public class StorePage extends BasePage {
     }
 
     public String getTitle(){
-        return driver.findElement ( SEARCH_TITLE ).getText ();
+        return wait.until ( ExpectedConditions.visibilityOfElementLocated ( SEARCH_TITLE ) ).getText ();
     }
 
     private By getAddToCardButtonElement(String productName){
@@ -45,8 +47,8 @@ public class StorePage extends BasePage {
         return this;
     }
 
-    public CartPage clickViewCart(){
-        driver.findElement ( VIEWCART_LINK ).click ();
+    public CartPage clickViewCart() throws InterruptedException {
+        wait.until ( ExpectedConditions.elementToBeClickable ( VIEWCART_LINK ) ).click ();
         return new CartPage(driver);
     }
 

@@ -1,9 +1,11 @@
 {
   "firstName": "Demo",
   "lastName": "User",
-  "address": "San Fransisco",
-  "city": "San Fransisco",
-  "postalCode": "94188",
+  "address": "Mumbai",
+  "country" : "India",
+  "city": "Mumbai",
+  "state" : "Maharashtra",
+  "postalCode": "400012",
   "email": "askdh@test.com"
 }
 
