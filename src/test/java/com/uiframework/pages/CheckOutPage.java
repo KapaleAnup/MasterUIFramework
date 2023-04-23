@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Listeners;
 
@@ -27,25 +28,22 @@ public class CheckOutPage extends BasePage {
 
     private final By OVELAY = By.cssSelector ( ".blockUI blockOverlay" );
 
+    private final By SELECTCOUNTRY = By.id ( "billing_country" );
+    private final By SELECTSTATE  = By.id ( "billing_state" );
+
+
 
     public CheckOutPage ( WebDriver driver ) {
         super ( driver );
     }
 
-//    public void checkoutBillingDetails(String firstName,String lastName, String address,String city,String postalcode,String email){
-//        enterFirstName ( firstName );
-//        enterLastName ( lastName );
-//        enterAddress ( address );
-//        enterCity ( city );
-//        enterPostalCode ( postalcode );
-//        enterEmail ( email );
-//    }
-
     public CheckOutPage setBillingAddress( BillingAddress billingAddress ){
       return  enterFirstName (billingAddress.getFirstName ()  )
                 .enterLastName ( billingAddress.getLastName ( ) )
+                .selectCountry ( billingAddress.getCountry () )
                 .enterAddress ( billingAddress.getAddress ( ) )
                 .enterCity ( billingAddress.getCity ( ) )
+                .selectState ( billingAddress.getState ( ) )
                 .enterPostalCode ( billingAddress.getPostalCode ( ) )
                 .enterEmail ( billingAddress.getEmail ( ) );
     }
@@ -61,6 +59,18 @@ public class CheckOutPage extends BasePage {
 
     public CheckOutPage enterAddress(String address){
         driver.findElement ( BILLING_ADDRESS ).sendKeys ( address );
+        return this;
+    }
+
+    public CheckOutPage selectCountry(String countryName){
+        Select select = new Select ( driver.findElement ( SELECTCOUNTRY) );
+        select.selectByVisibleText ( countryName);
+        return this;
+    }
+
+    public CheckOutPage selectState(String countryState){
+        Select select = new Select ( driver.findElement ( SELECTSTATE) );
+        select.selectByVisibleText ( countryState );
         return this;
     }
 
@@ -80,21 +90,17 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckOutPage placeOder(){
-        driver.findElement ( PLACEORDER ).click ();
+        wait.until ( ExpectedConditions.elementToBeClickable ( PLACEORDER ) ).click ();
         return this;
     }
 
     public String getMessage(){
-        return driver.findElement ( SUCCESSMESSAGE ).getText ();
+        return wait.until ( ExpectedConditions.visibilityOfElementLocated ( SUCCESSMESSAGE ) ).getText ();
     }
 
     public CheckoutLoginPage clickOnLoginLink(){
-       List <WebElement> overlays = driver.findElements ( OVELAY );
-       if(overlays.size () > 0 ){
-           new WebDriverWait ( driver, Duration.ofSeconds ( 15 )).
-                   until ( ExpectedConditions.invisibilityOfAllElements ( overlays ));
-       }
-        driver.findElement ( CHECKOUT_LOGIN ).click ();
+        waitForOverlay ( OVELAY );
+        wait.until ( ExpectedConditions.elementToBeClickable ( CHECKOUT_LOGIN ) ).click ();
         return new CheckoutLoginPage(driver);
     }
 }

@@ -16,20 +16,7 @@ public class TestLaunch extends BaseTest {
 
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws IOException {
-
-/*
-        BillingAddress billingAddress = new BillingAddress ()
-                .setFirstName ( "demo" )
-                .setLastName ( "user" )
-                .setAddress ( "San Fransisco" )
-                .setCity ( "San Fransisco" )
-                .setPostalCode ( "94188" )
-                .setEmail ( "asktest@gmail.com" );
-*/
-
-        /*BillingAddress billingAddress = new BillingAddress ("demo", "user","San Fransisco","San Fransisco",
-                "94188","asktest@gmail.com");*/
+    public void guestCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException {
 
         //parse jason object to java object
        BillingAddress billingAddress = JacksonUtils.deserializeJson ( "BillingAddress.json", BillingAddress.class );
@@ -56,45 +43,28 @@ public class TestLaunch extends BaseTest {
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException {
-       /* BillingAddress billingAddress = new BillingAddress ()
-                .setFirstName ( "demo" )
-                .setLastName ( "user" )
-                .setAddress ( "San Fransisco" )
-                .setCity ( "San Fransisco" )
-                .setPostalCode ( "94188" )
-                .setEmail ( "asktest@gmail.com" );*/
+    public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
 
-        BillingAddress billingAddress = new BillingAddress ("demo", "user","San Fransisco","San Fransisco",
-                "94188","asktest@gmail.com");
+        BillingAddress billingAddress = JacksonUtils.deserializeJson ( "BillingAddress.json", BillingAddress.class );
+        Product product = new Product ( 1211 );
 
         StorePage storePage = new HomePage ( driver )
                 .launchURL ()
                 .navigateToStoreMenuLink ()
-                .searchProduct ( "Blue" );
-        Assert.assertEquals ( storePage.getTitle (),"Search results: “Blue”");
+                .searchProduct ( "dark" );
+        Assert.assertEquals ( storePage.getTitle (),"Search results: “dark”");
 
-        storePage.clickAddToCart ("Blue Shoes");
-        Thread.sleep ( 5000 );
+        storePage.clickAddToCart (product.getName ());
         CartPage cartPage = storePage.clickViewCart ();
 
-        Assert.assertEquals (cartPage.getPrductName (),"Blue Shoes");
+        Assert.assertEquals (cartPage.getPrductName (),product.getName ());
         CheckOutPage checkOutPage = cartPage.checkout ();
 
         CheckoutLoginPage checkoutLoginPage = checkOutPage.clickOnLoginLink ();
-        Thread.sleep ( 5000 );
-
-//        checkoutLoginPage.
-//                enterUserName ( "Test" ).
-//                enterPassword ( "Test@123" )
-//                .clickOnLoginButton ();
-
         checkoutLoginPage.CheckoutLoginDetails ( "Test","Test@123" );
 
         checkOutPage.
                 setBillingAddress ( billingAddress).placeOder ();
-
-        Thread.sleep ( 5000 );
         Assert.assertEquals ( checkOutPage.getMessage (),"Thank you. Your order has been received." );
 
 
