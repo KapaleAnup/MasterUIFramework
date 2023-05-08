@@ -3,6 +3,7 @@ package com.uiframework.pages;
 import com.uiframework.base.BasePage;
 import com.uiframework.objects.BillingAddress;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,7 +32,8 @@ public class CheckOutPage extends BasePage {
     private final By SELECTCOUNTRY = By.id ( "billing_country" );
     private final By SELECTSTATE  = By.id ( "billing_state" );
 
-
+    private final By COUNTRY_DROPDOWN = By.id ( "select2-billing_country-container" );
+    private final By STATE_DROPDOWN = By.id ( "select2-billing_state-container" );
 
     public CheckOutPage ( WebDriver driver ) {
         super ( driver );
@@ -63,14 +65,27 @@ public class CheckOutPage extends BasePage {
     }
 
     public CheckOutPage selectCountry(String countryName){
-        Select select = new Select ( driver.findElement ( SELECTCOUNTRY) );
-        select.selectByVisibleText ( countryName);
+     /*   Select select = new Select ( driver.findElement ( SELECTCOUNTRY) );
+        select.selectByVisibleText ( countryName);*/
+
+
+        wait.until ( ExpectedConditions.elementToBeClickable ( COUNTRY_DROPDOWN ) ).click ();
+        WebElement element = wait.
+                until ( ExpectedConditions.elementToBeClickable ( By.xpath ( "//li[text()= '"+countryName+"']" ) ) );
+        ((JavascriptExecutor)driver).executeScript ( "arguments[0].scrollIntoView(true);",element );
+        element.click ();
         return this;
     }
 
     public CheckOutPage selectState(String countryState){
-        Select select = new Select ( driver.findElement ( SELECTSTATE) );
-        select.selectByVisibleText ( countryState );
+  /*      Select select = new Select ( driver.findElement ( SELECTSTATE) );
+        select.selectByVisibleText ( countryState );*/
+
+        wait.until ( ExpectedConditions.elementToBeClickable ( STATE_DROPDOWN ) ).click ();
+        WebElement element = wait.
+                until ( ExpectedConditions.elementToBeClickable ( By.xpath ( "//li[text()= '"+countryState+"']" ) ) );
+        ((JavascriptExecutor)driver).executeScript ( "arguments[0].scrollIntoView(true);",element );
+        element.click ();
         return this;
     }
 
